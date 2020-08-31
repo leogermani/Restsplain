@@ -76,12 +76,15 @@ export const getTypeString = (arg) => {
   }
 }
 
-export const getRouteParams = (route) => route
-  .split(/(.*?\(\?P[^)]+\))/)
-  .filter(Boolean)
-  .map( (p) => {
-    let [path, name, match] = p.split(/([^)]+)\(\?P<([a-z0-9]+)>([^)]+)\)/).filter(Boolean)
-    let example = getExampleData(getParamType(match))
-    return name && { path, name, match, example }
-  } )
-  .filter(Boolean)
+export const getRouteParams = (route) => { 
+  const stringRoute = (Array.isArray(route) && route[0] && route[0]['href']) ? route[0]['href'] : route;
+  return stringRoute
+    .split(/(.*?\(\?P[^)]+\))/)
+    .filter(Boolean)
+    .map( (p) => {
+      let [path, name, match] = p.split(/([^)]+)\(\?P<([a-z0-9]+)>([^)]+)\)/).filter(Boolean)
+      let example = getExampleData(getParamType(match))
+      return name && { path, name, match, example }
+    } )
+    .filter(Boolean)
+}

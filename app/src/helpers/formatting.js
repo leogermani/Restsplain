@@ -7,7 +7,10 @@
 // eslint-disable-next-line
 export const trim = ( str, charmap = '\\s' ) => str.replace( new RegExp( `^[${charmap}]*(.*?)[${charmap}]*$`, 'g' ), '$1' )
 
-export const getRouteReadable = path => path.replace( /\(.*?<([a-zA-Z0-9_-]+)>.*?\)/g, ':$1' )
+export const getRouteReadable = path => {
+    const stringPath = (Array.isArray(path) && path[0] && path[0]['href']) ? path[0]['href'] : path;
+    return stringPath.replace( /\(.*?<([a-zA-Z0-9_-]+)>.*?\)/g, ':$1' );
+}
 
 export const getRouteURL = path => `${getRouteReadable( path ).replace( /:/g, '' )}/`
 
