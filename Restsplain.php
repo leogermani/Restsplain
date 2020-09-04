@@ -70,8 +70,10 @@ function enqueue_scripts( $args = array() ) {
 		$logo_url = wp_get_attachment_image_url( $logo_id, array( 200, 200 ) );
 	}
 
+	$base_url = parse_url( home_url() );
+
 	$config = array(
-		'basename'          => get_docs_base(),
+		'basename'          => $base_url['path'] . get_docs_base(),
 		'restBase'          => get_rest_url(),
 		'embedded'          => get_docs_base() !== get_default_docs_base(),
 		'nonce'             => wp_create_nonce( 'wp_rest' ),
